@@ -61,12 +61,12 @@ class _FirstPageState extends ConsumerState {
 
   @override
   void dispose() {
-    CacheRepository.instance.box.then((boxProvider) {
-      // boxProvider.clear();
-      // boxProvider.close();
-    });
     // TODO: implement dispose
     super.dispose();
+    CacheRepository.instance.box.then((boxProvider) {
+      boxProvider.clear();
+      boxProvider.close();
+    });
   }
 
   @override
@@ -173,8 +173,19 @@ class _FirstPageState extends ConsumerState {
                     if (pickedCategory != categoryList.first) {
                       var instance = ChoiceBucket(true, false, pickedCategory,
                           pickedDifficulty, "", pickedLimitQs);
-
+/*
                       Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SecondPage(
+                            category: pickedCategory,
+                            difficultyLevel: pickedDifficulty,
+                            questionNos: pickedLimitQs,
+                          ),
+                        ),
+                      );*/
+
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => SecondPage(

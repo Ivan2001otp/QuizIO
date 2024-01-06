@@ -72,7 +72,7 @@ class _SecondPageState extends ConsumerState {
           } else if (dataSnapshot.connectionState == ConnectionState.done) {
             return Consumer(
               builder: (context, data, ref) {
-                if (dataSnapshot.data.toString() == null ||
+                if (/*dataSnapshot.data == null ||*/
                     dataSnapshot.data.toString() == 'No Response') {
                   return AlertDialog(
                     content: Text('Poor internet Connection !'),
@@ -87,7 +87,7 @@ class _SecondPageState extends ConsumerState {
                     actions: [
                       TextButton(
                         onPressed: () {
-                          //   Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         child: Text('Cancel'),
                       ),

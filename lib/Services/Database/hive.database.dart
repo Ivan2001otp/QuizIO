@@ -28,8 +28,9 @@ class CacheRepository {
           }
         }),
       );
-      _box = await Hive.openBox(Constants.cachedBox.toString());
+      _box = await Hive.openBox('cachedBox');
     }
+    print(_box);
     return _box!;
   }
 }

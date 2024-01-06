@@ -23,22 +23,16 @@ class DioService {
     //check in cache
 
     //if not present only make the api call.
-    String? cacheResult = await CacheRepository.instance.box.then((hiveDb) {
-      return hiveDb.get(Constants.cachedBox.toString());
+    dynamic cacheResult = await CacheRepository.instance.box.then((hiveDb) {
+      return hiveDb.get('cachedBox').toString();
     });
 
     if (cacheResult != null) {
-      print(cacheResult);
+      print('The cache result is : $cacheResult');
+      return cacheResult;
+    } else {
+      print('Cache result is null bro!');
     }
-    /*
-    if (cachedResponse(category, limit, level) != '') {
-      String responseFromCache = CacheRepository.instance.box.then(
-        (value) => value.get(Constants.cachedBox.toString()),
-      ) as String;
-
-      return responseFromCache;
-    }
-    */
 
     try {
       response = await dio
@@ -47,7 +41,7 @@ class DioService {
       if (response.statusCode! > 199 && response.statusCode! <= 299) {
         print("success reponse -  ${response.statusCode}");
         CacheRepository.instance.box.then(
-          (hiveDb) => hiveDb.put(Constants.cachedBox.toString(), response.data),
+          (hiveDb) => hiveDb.put('cachedBox', response.data),
         );
       } else {
         print("something went wrong");
