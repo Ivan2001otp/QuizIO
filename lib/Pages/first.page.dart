@@ -61,7 +61,10 @@ class _FirstPageState extends ConsumerState {
 
   @override
   void dispose() {
-    CacheRepository.instance.box.then((boxProvider) => boxProvider.close());
+    CacheRepository.instance.box.then((boxProvider) {
+      // boxProvider.clear();
+      // boxProvider.close();
+    });
     // TODO: implement dispose
     super.dispose();
   }

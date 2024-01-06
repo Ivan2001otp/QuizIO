@@ -10,9 +10,9 @@ void main() {
     ProviderScope(
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.deepPurple),
-        // home: FirstPage(),
-        home: SecondPage(
-            category: "Linux", difficultyLevel: '', questionNos: '5'),
+        home: FirstPage(),
+        // home: SecondPage(
+        //     category: "Linux", difficultyLevel: '', questionNos: '5'),
         debugShowCheckedModeBanner: false,
       ),
     ),

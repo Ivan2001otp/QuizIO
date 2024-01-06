@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiz_app/Pages/first.page.dart';
 import 'package:quiz_app/Services/NetworkService/dio.service.dart';
 import 'package:quiz_app/main.dart';
+import 'package:provider/provider.dart' as native_provider;
 
 class SecondPage extends ConsumerStatefulWidget {
   final String category;
@@ -71,6 +72,35 @@ class _SecondPageState extends ConsumerState {
           } else if (dataSnapshot.connectionState == ConnectionState.done) {
             return Consumer(
               builder: (context, data, ref) {
+                if (dataSnapshot.data.toString() == null ||
+                    dataSnapshot.data.toString() == 'No Response') {
+                  return AlertDialog(
+                    content: Text('Poor internet Connection !'),
+                    title: Text('Network Error'),
+                    surfaceTintColor:
+                        const Color.fromARGB(255, 45, 45, 45).withOpacity(0.6),
+                    icon: Icon(
+                      Icons
+                          .signal_cellular_connected_no_internet_0_bar_outlined,
+                      color: Colors.red,
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          //   Navigator.pop(context);
+                        },
+                        child: Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          //invoke the futureBuilder again\
+                          print('retry');
+                        },
+                        child: Text('Retry'),
+                      )
+                    ],
+                  );
+                }
                 return Text(dataSnapshot.data.toString());
               },
             );

@@ -1,10 +1,17 @@
 import 'package:dio/dio.dart' as DioPackage;
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:quiz_app/Services/Database/hive.database.dart';
 import 'package:quiz_app/Util/helper.util.dart';
 
 class DioService {
-  final dio = DioPackage.Dio();
+  final dio = DioPackage.Dio(
+    DioPackage.BaseOptions(
+      connectTimeout: Duration(seconds: 20),
+      sendTimeout: Duration(seconds: 12),
+      receiveTimeout: Duration(seconds: 12),
+    ),
+  );
   final String _URL =
       'https://quizapi.io/api/v1/questions?apiKey=hrtG3piTvZLbwHnQsBH4Uu7oxDDXGpKLZ6OkUCDj';
 
@@ -16,14 +23,22 @@ class DioService {
     //check in cache
 
     //if not present only make the api call.
+    String? cacheResult = await CacheRepository.instance.box.then((hiveDb) {
+      return hiveDb.get(Constants.cachedBox.toString());
+    });
 
-    if (cachedResponse(category, limit, level) != null) {
+    if (cacheResult != null) {
+      print(cacheResult);
+    }
+    /*
+    if (cachedResponse(category, limit, level) != '') {
       String responseFromCache = CacheRepository.instance.box.then(
         (value) => value.get(Constants.cachedBox.toString()),
       ) as String;
 
       return responseFromCache;
     }
+    */
 
     try {
       response = await dio
@@ -40,8 +55,10 @@ class DioService {
 
       return response.data;
     } on DioPackage.DioException catch (e) {
+      print('error occured due to exception-1 : ${e.message}');
       print(e.error.toString());
     } catch (e) {
+      print('error occured due to exception-2');
       print(e);
     } finally {
       dio.close(force: true);
