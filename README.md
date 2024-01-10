@@ -1,16 +1,13 @@
 # quiz_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- This is a simple Quiz App , to cover down my basics of flutter.
+- In the entry screen the user is eligible to pick the Question Category , select difficulty level and number of questions.
+- Caching service implemented with the help of Hive Database.
+- Whenever the user selects the right or wrong answer , a toast message appears at the bottom side.
+  
+  
+## Screen Shots of Output
+![Entry Screen](https://github.com/Ivan2001otp/QuizIO/blob/i/first_page/screenshots/sc1.png)
+![Quiz Question-1](https://github.com/Ivan2001otp/QuizIO/blob/i/first_page/screenshots/question2.png)
+![Quiz Question-2](https://github.com/Ivan2001otp/QuizIO/blob/i/first_page/screenshots/question3.png)
+![Quiz Question-3](https://github.com/Ivan2001otp/QuizIO/blob/i/first_page/screenshots/question4.png)
+![Quiz Question-4](https://github.com/Ivan2001otp/QuizIO/blob/i/first_page/screenshots/sc1.png)
