@@ -7,9 +7,10 @@ import 'package:quiz_app/Util/helper.util.dart';
 class DioService {
   final dio = DioPackage.Dio(
     DioPackage.BaseOptions(
-      connectTimeout: Duration(seconds: 20),
+      connectTimeout: Duration(seconds: 12),
       sendTimeout: Duration(seconds: 12),
       receiveTimeout: Duration(seconds: 12),
+      responseType: DioPackage.ResponseType.json,
     ),
   );
   final String _URL =
@@ -17,17 +18,17 @@ class DioService {
 
   String? _cacheData = null;
 
-  dynamic request(String category, String limit, String level) async {
+  Future<dynamic> request(String category, String limit, String level) async {
     DioPackage.Response response;
 
     //check in cache
 
     //if not present only make the api call.
     dynamic cacheResult = await CacheRepository.instance.box.then((hiveDb) {
-      return hiveDb.get('cachedBox').toString();
+      return hiveDb.get('cachedBox', defaultValue: '');
     });
 
-    if (cacheResult != null) {
+    if (cacheResult != null && cacheResult != '') {
       print('The cache result is : $cacheResult');
       return cacheResult;
     } else {
@@ -36,7 +37,13 @@ class DioService {
 
     try {
       response = await dio
-          .get('$_URL&category=${category}&difficulty=$level&limit=$limit');
+          .get(
+        '$_URL&category=${category}&difficulty=$level&limit=$limit',
+        options: DioPackage.Options(method: 'GET'),
+      )
+          .then((value) {
+        return value;
+      });
 
       if (response.statusCode! > 199 && response.statusCode! <= 299) {
         print("success reponse -  ${response.statusCode}");
@@ -51,13 +58,13 @@ class DioService {
     } on DioPackage.DioException catch (e) {
       print('error occured due to exception-1 : ${e.message}');
       print(e.error.toString());
+      return cacheResult;
     } catch (e) {
       print('error occured due to exception-2');
       print(e);
     } finally {
       dio.close(force: true);
     }
-    return 'No Response';
   }
 
   Future<String> cachedResponse(
